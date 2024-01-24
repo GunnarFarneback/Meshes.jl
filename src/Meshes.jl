@@ -491,7 +491,7 @@ export
   Translate,
   Affine,
   Scale,
-  Expand,
+  Stretch,
   StdCoords,
   Repair,
   Bridge,

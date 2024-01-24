@@ -151,7 +151,7 @@ end
 # ---------------
 
 function apply(::Repair{10}, poly::PolyArea)
-  t = _expand10(poly)
+  t = _stretch10(poly)
   r = rings(poly)
   n, c = apply(t, first(r))
   PolyArea([n; r[2:end]]), (t, c)
@@ -167,4 +167,4 @@ apply(::Repair{10}, poly::Ngon) = poly, nothing
 
 revert(::Repair{10}, poly::Ngon, cache) = poly
 
-_expand10(g::Geometry{Dim,T}) where {Dim,T} = Expand(ntuple(i -> T(1) + 10atol(T), Dim))
+_stretch10(g::Geometry{Dim,T}) where {Dim,T} = Stretch(ntuple(i -> T(1) + 10atol(T), Dim))
