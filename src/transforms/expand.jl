@@ -48,7 +48,7 @@ reapply(t::Expand, g::GeometryOrDomain, c) = reapply(c[1], g, c[2])
 
 function _expand(t, g)
   o = coordinates(_origin(g))
-  Translate(-o...) → Stretch(t.factors) → Translate(o...)
+  Translate(-o...) → Scale(t.factors) → Translate(o...)
 end
 
 _origin(g) = centroid(g)
@@ -58,8 +58,8 @@ _origin(p::Plane) = p(0, 0)
 # SPECIAL CASES
 # --------------
 
-apply(t::Expand, v::Vec) = apply(Stretch(t.factors), v)
+apply(t::Expand, v::Vec) = apply(Scale(t.factors), v)
 
-revert(t::Expand, v::Vec, c) = revert(Stretch(t.factors), v, c)
+revert(t::Expand, v::Vec, c) = revert(Scale(t.factors), v, c)
 
-reapply(t::Expand, v::Vec, c) = reapply(Stretch(t.factors), v, c)
+reapply(t::Expand, v::Vec, c) = reapply(Scale(t.factors), v, c)

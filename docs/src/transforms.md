@@ -50,16 +50,16 @@ viz(fig[1,2], mesh)
 fig
 ```
 
-## Stretch
+## Scale
 
 ```@docs
-Stretch
+Scale
 ```
 
 ```@example transforms
 grid = CartesianGrid(10, 10)
 
-mesh = grid |> Stretch(2., 3.)
+mesh = grid |> Scale(2., 3.)
 
 fig = Mke.Figure(size = (800, 400))
 viz(fig[1,1], grid)

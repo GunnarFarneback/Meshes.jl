@@ -8,7 +8,7 @@ isoptimized(t::TB.SequentialTransform) = all(isoptimized, t)
 isoptimized(::GeometricTransform) = false
 isoptimized(::Rotate{<:Angle2d}) = true
 isoptimized(::Translate) = true
-isoptimized(::Stretch) = true
+isoptimized(::Scale) = true
 
 vizgrid2D!(plot::Viz{<:Tuple{TransformedGrid}}) = transformedgrid!(plot, vizmesh2D!)
 
@@ -47,7 +47,7 @@ function makietransform!(plot, trans::Translate)
   Makie.translate!(plot, offsets...)
 end
 
-function makietransform!(plot, trans::Stretch)
+function makietransform!(plot, trans::Scale)
   factors = first(TB.parameters(trans))
   Makie.scale!(plot, factors...)
 end

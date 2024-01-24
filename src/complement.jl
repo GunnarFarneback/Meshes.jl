@@ -16,7 +16,7 @@ function _boxboundary(g)
   c = coordinates(center(b))
   l = sides(b)
   α = (l .+ 2atol(T)) ./ l
-  t = Translate(-c...) → Stretch(α) → Translate(c...)
+  t = Translate(-c...) → Scale(α) → Translate(c...)
   boundary(t(b))
 end
 

@@ -3,48 +3,48 @@
 # ------------------------------------------------------------------
 
 """
-    Stretch(s₁, s₂, ...)
+    Scale(s₁, s₂, ...)
 
-Stretch geometry or domain with
+Scale geometry or domain with
 strictly positive scaling factors
 `s₁, s₂, ...`.
 
 ## Examples
 
 ```julia
-Stretch(1.0, 2.0, 3.0)
+Scale(1.0, 2.0, 3.0)
 ```
 """
-struct Stretch{Dim,T} <: CoordinateTransform
+struct Scale{Dim,T} <: CoordinateTransform
   factors::NTuple{Dim,T}
 
-  function Stretch{Dim,T}(factors) where {Dim,T}
+  function Scale{Dim,T}(factors) where {Dim,T}
     any(≤(0), factors) && throw(ArgumentError("Scaling factors must be positive."))
     new(factors)
   end
 end
 
-Stretch(factors::NTuple{Dim,T}) where {Dim,T} = Stretch{Dim,T}(factors)
+Scale(factors::NTuple{Dim,T}) where {Dim,T} = Scale{Dim,T}(factors)
 
-Stretch(factors...) = Stretch(factors)
+Scale(factors...) = Scale(factors)
 
-parameters(t::Stretch) = (; factors=t.factors)
+parameters(t::Scale) = (; factors=t.factors)
 
-isaffine(::Type{<:Stretch}) = true
+isaffine(::Type{<:Scale}) = true
 
-isrevertible(::Type{<:Stretch}) = true
+isrevertible(::Type{<:Scale}) = true
 
-isinvertible(::Type{<:Stretch}) = true
+isinvertible(::Type{<:Scale}) = true
 
-inverse(t::Stretch) = Stretch(1 ./ t.factors)
+inverse(t::Scale) = Scale(1 ./ t.factors)
 
-applycoord(t::Stretch, v::Vec) = t.factors .* v
+applycoord(t::Scale, v::Vec) = t.factors .* v
 
 # --------------
 # SPECIAL CASES
 # --------------
 
-function applycoord(t::Stretch, g::CartesianGrid)
+function applycoord(t::Scale, g::CartesianGrid)
   dims = size(g)
   orig = applycoord(t, minimum(g))
   spac = t.factors .* spacing(g)

@@ -490,7 +490,7 @@ export
   Rotate,
   Translate,
   Affine,
-  Stretch,
+  Scale,
   Expand,
   StdCoords,
   Repair,

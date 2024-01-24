@@ -537,20 +537,20 @@
     @test_throws ArgumentError Affine(T[1 1; 2 2], T[1, 2, 3])
   end
 
-  @testset "Stretch" begin
-    @test isaffine(Stretch)
-    @test TB.isrevertible(Stretch)
-    @test TB.isinvertible(Stretch)
-    @test TB.inverse(Stretch(T(1), T(2))) == Stretch(T(1), T(1 / 2))
+  @testset "Scale" begin
+    @test isaffine(Scale)
+    @test TB.isrevertible(Scale)
+    @test TB.isinvertible(Scale)
+    @test TB.inverse(Scale(T(1), T(2))) == Scale(T(1), T(1 / 2))
     factors = (T(1), T(2))
-    f = Stretch(factors)
+    f = Scale(factors)
     @test TB.parameters(f) == (; factors)
 
     # ----
     # VEC
     # ----
 
-    f = Stretch(T(1), T(2))
+    f = Scale(T(1), T(2))
     v = V2(1, 1)
     r, c = TB.apply(f, v)
     @test r ≈ V2(1, 2)
@@ -560,7 +560,7 @@
     # POINT
     # ------
 
-    f = Stretch(T(1), T(2))
+    f = Scale(T(1), T(2))
     g = P2(1, 1)
     r, c = TB.apply(f, g)
     @test r ≈ P2(1, 2)
@@ -570,13 +570,13 @@
     # SEGMENT
     # --------
 
-    f = Stretch(T(1), T(2))
+    f = Scale(T(1), T(2))
     g = Segment(P2(0, 0), P2(1, 0))
     r, c = TB.apply(f, g)
     @test r ≈ Segment(P2(0, 0), P2(1, 0))
     @test TB.revert(f, r, c) ≈ g
 
-    f = Stretch(T(2), T(1))
+    f = Scale(T(2), T(1))
     g = Segment(P2(0, 0), P2(1, 0))
     r, c = TB.apply(f, g)
     @test r ≈ Segment(P2(0, 0), P2(2, 0))
@@ -586,7 +586,7 @@
     # BOX
     # ----
 
-    f = Stretch(T(1), T(2))
+    f = Scale(T(1), T(2))
     g = Box(P2(0, 0), P2(1, 1))
     r, c = TB.apply(f, g)
     @test r isa Box
@@ -597,7 +597,7 @@
     # TRIANGLE
     # ---------
 
-    f = Stretch(T(1), T(2), T(3))
+    f = Scale(T(1), T(2), T(3))
     g = Triangle(P3(0, 0, 0), P3(1, 0, 0), P3(0, 1, 1))
     r, c = TB.apply(f, g)
     @test r ≈ Triangle(P3(0, 0, 0), P3(1, 0, 0), P3(0, 2, 3))
@@ -607,7 +607,7 @@
     # MULTIGEOM
     # ----------
 
-    f = Stretch(T(1), T(2))
+    f = Scale(T(1), T(2))
     t = Triangle(P2(0, 0), P2(1, 0), P2(1, 1))
     g = Multi([t, t])
     r, c = TB.apply(f, g)
@@ -618,13 +618,13 @@
     # PLANE
     # ------
 
-    f = Stretch(T(1), T(1), T(2))
+    f = Scale(T(1), T(1), T(2))
     g = Plane(P3(1, 1, 1), V3(0, 0, 1))
     r, c = TB.apply(f, g)
     @test r ≈ Plane(P3(1, 1, 2), V3(0, 0, 1))
     @test TB.revert(f, r, c) ≈ g
 
-    f = Stretch(T(2), T(1), T(1))
+    f = Scale(T(2), T(1), T(1))
     g = Plane(P3(1, 1, 1), V3(0, 0, 1))
     r, c = TB.apply(f, g)
     @test r ≈ g
@@ -634,7 +634,7 @@
     # CYLINDER
     # ---------
 
-    f = Stretch(T(1), T(1), T(2))
+    f = Scale(T(1), T(1), T(2))
     g = Cylinder(T(1))
     r, c = TB.apply(f, g)
     @test r ≈ Cylinder(P3(0, 0, 0), P3(0, 0, 2))
@@ -644,7 +644,7 @@
     # POINTSET
     # ---------
 
-    f = Stretch(T(1), T(2))
+    f = Scale(T(1), T(2))
     d = PointSet([P2(0, 0), P2(1, 0), P2(1, 1)])
     r, c = TB.apply(f, d)
     @test r ≈ PointSet([P2(0, 0), P2(1, 0), P2(1, 2)])
@@ -654,7 +654,7 @@
     # GEOMETRYSET
     # ------------
 
-    f = Stretch(T(1), T(2))
+    f = Scale(T(1), T(2))
     t = Triangle(P2(0, 0), P2(1, 0), P2(1, 1))
     d = GeometrySet([t, t])
     r, c = TB.apply(f, d)
@@ -669,7 +669,7 @@
     # CARTESIANGRID
     # --------------
 
-    f = Stretch(T(1), T(2))
+    f = Scale(T(1), T(2))
     d = CartesianGrid(P2(1, 1), P2(11, 11), dims=(10, 10))
     r, c = TB.apply(f, d)
     @test r isa CartesianGrid
@@ -680,7 +680,7 @@
     # SIMPLEMESH
     # -----------
 
-    f = Stretch(T(1), T(2))
+    f = Scale(T(1), T(2))
     p = P2[(0, 0), (1, 0), (0, 1), (1, 1), (0.5, 0.5)]
     c = connect.([(1, 2, 5), (2, 4, 5), (4, 3, 5), (3, 1, 5)], Triangle)
     d = SimpleMesh(p, c)
