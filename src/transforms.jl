@@ -80,11 +80,11 @@ applycoord(t::CoordinateTransform, g::AbstractVector{<:Geometry}) = map(gᵢ -> 
 # IMPLEMENTATIONS
 # ----------------
 
+include("transforms/scale.jl")
 include("transforms/rotate.jl")
 include("transforms/translate.jl")
 include("transforms/affine.jl")
-include("transforms/scale.jl")
-include("transforms/expand.jl")
+include("transforms/stretch.jl")
 include("transforms/stdcoords.jl")
 include("transforms/repair.jl")
 include("transforms/bridge.jl")
