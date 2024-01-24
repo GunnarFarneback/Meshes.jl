@@ -67,6 +67,9 @@ function readply(T, fname)
   SimpleMesh(points, connec)
 end
 
+# dummy definitions
+include("dummy.jl")
+
 # list of tests
 testfiles = [
   "tolerances.jl",
